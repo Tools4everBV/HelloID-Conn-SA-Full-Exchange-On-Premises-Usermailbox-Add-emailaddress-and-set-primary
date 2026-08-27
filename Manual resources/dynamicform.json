@@ -1,0 +1,232 @@
+[
+  {
+    "label": "Select mailbox",
+    "fields": [
+      {
+        "key": "searchMailbox",
+        "templateOptions": {
+          "label": "Search mailbox",
+          "placeholder": "",
+          "required": true
+        },
+        "type": "input",
+        "summaryVisibility": "Show",
+        "requiresTemplateOptions": true,
+        "requiresKey": true,
+        "requiresDataSource": false
+      },
+      {
+        "key": "selectedmailbox",
+        "templateOptions": {
+          "label": "Select Mailbox",
+          "required": true,
+          "grid": {
+            "columns": [
+              {
+                "headerName": "Display Name",
+                "field": "DisplayName"
+              },
+              {
+                "headerName": "Primary Smtp Address",
+                "field": "PrimarySmtpAddress"
+              },
+              {
+                "headerName": "User Principal Name",
+                "field": "UserPrincipalName"
+              },
+              {
+                "headerName": "Hidden From Address Lists Enabled",
+                "field": "HiddenFromAddressListsEnabled"
+              }
+            ],
+            "height": 300,
+            "rowSelection": "single"
+          },
+          "dataSourceConfig": {
+            "dataSourceGuid": "$dataSourceGuid_0",
+            "input": {
+              "propertyInputs": [
+                {
+                  "propertyName": "searchValue",
+                  "otherFieldValue": {
+                    "otherFieldKey": "searchMailbox"
+                  }
+                }
+              ]
+            }
+          },
+          "useDefault": false,
+          "allowCsvDownload": true
+        },
+        "type": "grid",
+        "summaryVisibility": "Show",
+        "requiresTemplateOptions": true,
+        "requiresKey": true,
+        "requiresDataSource": true
+      }
+    ]
+  },
+  {
+    "label": "Update mailbox",
+    "fields": [
+      {
+        "key": "currentMailaddresses",
+        "templateOptions": {
+          "label": "Current Mailaddresses",
+          "grid": {
+            "columns": [
+              {
+                "headerName": "Prefix",
+                "field": "prefix"
+              },
+              {
+                "headerName": "Address",
+                "field": "address"
+              }
+            ],
+            "height": 300,
+            "rowSelection": "single"
+          },
+          "dataSourceConfig": {
+            "dataSourceGuid": "$dataSourceGuid_1",
+            "input": {
+              "propertyInputs": [
+                {
+                  "propertyName": "selectedMailbox",
+                  "otherFieldValue": {
+                    "otherFieldKey": "selectedmailbox"
+                  }
+                }
+              ]
+            }
+          },
+          "defaultSelectorProperty": "address",
+          "allowCsvDownload": true
+        },
+        "type": "grid",
+        "summaryVisibility": "Show",
+        "requiresTemplateOptions": true,
+        "requiresKey": true,
+        "requiresDataSource": true
+      },
+      {
+        "key": "formRow",
+        "templateOptions": {},
+        "fieldGroup": [
+          {
+            "key": "mailPrefix",
+            "templateOptions": {
+              "label": "Email address",
+              "required": true,
+              "pattern": "^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "type": "input",
+            "summaryVisibility": "Show",
+            "requiresTemplateOptions": true,
+            "requiresKey": true,
+            "requiresDataSource": false
+          },
+          {
+            "key": "mailDomain",
+            "templateOptions": {
+              "label": "Mail domain",
+              "required": true,
+              "useObjects": false,
+              "useDataSource": true,
+              "useFilter": false,
+              "options": [
+                "Option 1",
+                "Option 2",
+                "Option 3"
+              ],
+              "dataSourceConfig": {
+                "dataSourceGuid": "$dataSourceGuid_2",
+                "input": {
+                  "propertyInputs": [
+                    {
+                      "propertyName": "selectedmailbox",
+                      "otherFieldValue": {
+                        "otherFieldKey": "selectedmailbox"
+                      }
+                    }
+                  ]
+                }
+              },
+              "valueField": "Id",
+              "textField": "Id",
+              "useDefault": true,
+              "defaultSelectorProperty": "Id"
+            },
+            "type": "dropdown",
+            "summaryVisibility": "Show",
+            "textOrLabel": "text",
+            "requiresTemplateOptions": true,
+            "requiresKey": true,
+            "requiresDataSource": false
+          }
+        ],
+        "type": "formrow",
+        "requiresTemplateOptions": true,
+        "requiresKey": true,
+        "requiresDataSource": false
+      },
+      {
+        "key": "mailValidation",
+        "templateOptions": {
+          "label": "Email address validation",
+          "required": true,
+          "pattern": "^Valid.*",
+          "readonly": true,
+          "useDataSource": true,
+          "dataSourceConfig": {
+            "dataSourceGuid": "$dataSourceGuid_3",
+            "input": {
+              "propertyInputs": [
+                {
+                  "propertyName": "mailprefix",
+                  "otherFieldValue": {
+                    "otherFieldKey": "mailPrefix"
+                  }
+                },
+                {
+                  "propertyName": "maildomain",
+                  "otherFieldValue": {
+                    "otherFieldKey": "mailDomain"
+                  }
+                },
+                {
+                  "propertyName": "selectedmailbox",
+                  "otherFieldValue": {
+                    "otherFieldKey": "selectedmailbox"
+                  }
+                }
+              ]
+            }
+          },
+          "displayField": "output"
+        },
+        "hideExpression": "!model[\"mailPrefix\"]",
+        "type": "input",
+        "summaryVisibility": "Show",
+        "requiresTemplateOptions": true,
+        "requiresKey": true,
+        "requiresDataSource": false
+      },
+      {
+        "key": "blnSetAsPrimaryEmail",
+        "templateOptions": {
+          "label": "Set as primary email address?",
+          "useSwitch": true,
+          "checkboxLabel": "Set as primary email address"
+        },
+        "type": "boolean",
+        "summaryVisibility": "Show",
+        "requiresTemplateOptions": true,
+        "requiresKey": true,
+        "requiresDataSource": false
+      }
+    ]
+  }
+]
